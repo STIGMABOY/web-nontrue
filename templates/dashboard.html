@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NonTrue Roblox Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .navbar-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card { border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .result-card { max-height: 500px; overflow-y: auto; }
+        .status-valid { color: #28a745; font-weight: bold; }
+        .status-invalid { color: #dc3545; font-weight: bold; }
+        .status-error { color: #ffc107; font-weight: bold; }
+        .stat-card { text-align: center; padding: 20px; border-radius: 15px; background: white; }
+        .stat-number { font-size: 2rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-custom navbar-dark">
+        <div class="container">
+            <span class="navbar-brand"><i class="fas fa-robot"></i> NonTrue Roblox Checker</span>
+            <button class="btn btn-outline-light btn-sm" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-3"><div class="stat-card"><i class="fas fa-users fa-2x text-primary"></i><div class="stat-number" id="totalCount">0</div><div>Total Checked</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><i class="fas fa-check-circle fa-2x text-success"></i><div class="stat-number text-success" id="validCount">0</div><div>Valid Accounts</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><i class="fas fa-times-circle fa-2x text-danger"></i><div class="stat-number text-danger" id="invalidCount">0</div><div>Invalid Accounts</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><i class="fas fa-exclamation-triangle fa-2x text-warning"></i><div class="stat-number text-warning" id="errorCount">0</div><div>Errors</div></div></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"><h5><i class="fas fa-upload"></i> Account Input</h5></div>
+                    <div class="card-body">
+                        <textarea class="form-control" id="accountsInput" rows="10" placeholder="username1:password1&#10;username2:password2"></textarea>
+                        <input type="url" class="form-control mt-3" id="webhookUrl" placeholder="Discord Webhook URL (Optional)">
+                        <button class="btn btn-primary w-100 mt-3" onclick="startCheck()" id="checkBtn"><i class="fas fa-play"></i> Start Checking</button>
+                        <div class="progress mt-3 d-none" id="progressBar"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"><h5><i class="fas fa-chart-line"></i> Live Results</h5></div>
+                    <div class="card-body result-card" id="resultsContainer"><div class="text-center text-muted">Results will appear here</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getToken() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'user_token') return value;
+            }
+            return null;
+        }
+
+        async function validateToken() {
+            const token = await getToken();
+            if (!token) { window.location.href = '/login'; return null; }
+            const response = await fetch('/api/validate-token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: token })
+            });
+            if (!response.ok) { window.location.href = '/login'; return null; }
+            return token;
+        }
+
+        async function startCheck() {
+            const accounts = document.getElementById('accountsInput').value;
+            const webhook = document.getElementById('webhookUrl').value;
+            const token = await getToken();
+            if (!accounts.trim()) { alert('Please enter accounts to check'); return; }
+            const checkBtn = document.getElementById('checkBtn');
+            checkBtn.disabled = true;
+            checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            try {
+                const response = await fetch('/api/check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                    body: JSON.stringify({ accounts: accounts, webhook_url: webhook })
+                });
+                const data = await response.json();
+                document.getElementById('totalCount').textContent = data.total;
+                document.getElementById('validCount').textContent = data.valid;
+                document.getElementById('invalidCount').textContent = data.invalid;
+                document.getElementById('errorCount').textContent = data.error;
+                const container = document.getElementById('resultsContainer');
+                container.innerHTML = '';
+                data.results.forEach(result => {
+                    const statusClass = result.status === 'valid' ? 'status-valid' : (result.status === 'invalid' ? 'status-invalid' : 'status-error');
+                    const statusIcon = result.status === 'valid' ? 'fa-check-circle' : (result.status === 'invalid' ? 'fa-times-circle' : 'fa-exclamation-triangle');
+                    container.innerHTML += `<div class="border-bottom pb-2 mb-2"><div class="d-flex justify-content-between"><div><i class="fas ${statusIcon} ${statusClass}"></i> <strong>${result.username}</strong></div><span class="${statusClass}">${result.status.toUpperCase()}</span></div><small class="text-muted">${result.message}</small></div>`;
+                });
+            } catch (error) { alert('Error: ' + error.message); }
+            finally { checkBtn.disabled = false; checkBtn.innerHTML = '<i class="fas fa-play"></i> Start Checking'; }
+        }
+
+        function logout() { document.cookie = 'user_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'; window.location.href = '/login'; }
+        validateToken();
+    </script>
+</body>
+</html>

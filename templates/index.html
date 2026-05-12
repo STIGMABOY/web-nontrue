@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NonTrue - Professional Roblox Account Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero-content { position: relative; z-index: 1; padding: 100px 0; }
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; animation: fadeInUp 1s ease; }
+        .hero p { font-size: 1.2rem; opacity: 0.95; margin-bottom: 30px; animation: fadeInUp 1s ease 0.2s both; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-custom { padding: 15px 40px; border-radius: 50px; font-weight: 600; transition: all 0.3s; margin: 10px; }
+        .btn-custom-primary { background: white; color: #667eea; border: none; }
+        .btn-custom-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .btn-custom-outline { background: transparent; border: 2px solid white; color: white; }
+        .btn-custom-outline:hover { background: white; color: #667eea; transform: translateY(-3px); }
+        .features { padding: 80px 0; background: #f8f9fa; }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-card { background: white; padding: 40px 30px; border-radius: 20px; text-align: center; transition: all 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.05); height: 100%; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .feature-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; }
+        .feature-icon i { font-size: 40px; color: white; }
+        .stats { padding: 60px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .stat-number { font-size: 3rem; font-weight: 800; margin-bottom: 10px; }
+        .footer { background: #1a1a2e; color: white; padding: 40px 0; }
+        .footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        .footer a:hover { color: white; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center text-white">
+                    <h1>Professional Roblox Account Checker</h1>
+                    <p>Fast, reliable, and secure account checking service with real-time results and detailed analytics. Trusted by thousands of users worldwide.</p>
+                    <div>
+                        <a href="/login" class="btn btn-custom btn-custom-primary"><i class="fas fa-sign-in-alt"></i> Get Started</a>
+                        <a href="#features" class="btn btn-custom btn-custom-outline"><i class="fas fa-info-circle"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose NonTrue?</h2>
+            <div class="row g-4">
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3>Lightning Fast</h3><p>Check hundreds of accounts in seconds</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Secure & Private</h3><p>Your data is encrypted and never stored</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>Detailed Analytics</h3><p>Get comprehensive reports with IP geolocation</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-download"></i></div><h3>Export Results</h3><p>Download valid and invalid accounts as text files</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fab fa-discord"></i></div><h3>Discord Integration</h3><p>Send real-time results to your Discord channel</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon"><i class="fas fa-globe"></i></div><h3>IP Geolocation</h3><p>Get detailed information about account locations</p></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"><div class="text-center"><div class="stat-number">100K+</div><div>Accounts Checked</div></div></div>
+                <div class="col-md-3"><div class="text-center"><div class="stat-number">25K+</div><div>Valid Accounts</div></div></div>
+                <div class="col-md-3"><div class="text-center"><div class="stat-number">99.9%</div><div>Uptime</div></div></div>
+                <div class="col-md-3"><div class="text-center"><div class="stat-number">5K+</div><div>Happy Users</div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding: 80px 0;">
+        <div class="row">
+            <div class="col-md-4"><div class="text-center"><div class="step-number" style="width:60px;height:60px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:24px;font-weight:bold;">1</div><h4>Get Token</h4><p class="text-muted">Purchase a token from our admin panel</p></div></div>
+            <div class="col-md-4"><div class="text-center"><div class="step-number" style="width:60px;height:60px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:24px;font-weight:bold;">2</div><h4>Enter Accounts</h4><p class="text-muted">Paste your username:password list</p></div></div>
+            <div class="col-md-4"><div class="text-center"><div class="step-number" style="width:60px;height:60px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:white;font-size:24px;font-weight:bold;">3</div><h4>Download Results</h4><p class="text-muted">Export valid accounts and use them</p></div></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h4>NonTrue Checker</h4><p class="mt-3">Professional Roblox account checking service</p></div>
+                <div class="col-md-6 text-end"><h5>Quick Links</h5><p><a href="/login">Dashboard</a> | <a href="/admin/login">Admin Panel</a></p><p>&copy; 2024 NonTrue Checker. All rights reserved.</p></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
